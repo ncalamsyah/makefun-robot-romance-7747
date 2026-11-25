@@ -1,6 +1,3 @@
-#!/usr/bin/env python3
-"""Write the Robot Romance bounty one-liner to /output/entry.txt."""
-
 from pathlib import Path
 
 LINE = (
@@ -8,23 +5,13 @@ LINE = (
     "and generalizing to nobody else."
 )
 
-
-def output_dir() -> Path:
-    preferred = Path("/output")
-    try:
-        preferred.mkdir(parents=True, exist_ok=True)
-        return preferred
-    except OSError:
-        # Local macOS (read-only root); judge sandboxes use /output.
-        fallback = Path("output")
-        fallback.mkdir(parents=True, exist_ok=True)
-        return fallback
-
-
 def main() -> None:
-    out_path = output_dir() / "entry.txt"
-    out_path.write_text(LINE, encoding="utf-8")
-
+    out = Path("/output")
+    out.mkdir(parents=True, exist_ok=True)
+    path = out / "entry.txt"
+    path.write_text(LINE, encoding="utf-8")
+    assert 1 <= len(LINE) <= 200
+    assert "\n" not in LINE
 
 if __name__ == "__main__":
     main()
